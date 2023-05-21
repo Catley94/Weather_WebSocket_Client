@@ -2,7 +2,7 @@
 //Had to make this repo private because I'm storing my APIKey here
 //In Unity, ask for the API key and send it to the frontend.
 const format = "json";
-const weatherAPIKey = "";
+let weatherAPIKey = "";
 
 const form = document.querySelector("#form");
 const textInput = document.querySelector("#location");
@@ -13,13 +13,17 @@ form.addEventListener("submit", (event) => {
 })
 
 
+const setWeatherAPIKey = (apiKey) => {
+    weatherAPIKey = apiKey;
+}
+
 const getWeatherData = (_location) => {
     const examplecallString = `http://api.weatherapi.com/v1/current.${format}?key=${weatherAPIKey}&q=${_location}&aqi=no`;
     axios.get(examplecallString)
         .then((response) => {
             const weatherSummary = response.data.current.condition.text;
             console.log(response);
-            // sendMessageToServer(weatherSummary);
+            sendMessageToServer(weatherSummary);
             console.log(weatherSummary);
             //TODO: Could hide the form now and show the game?
             //TODO: Could even display the question in Unity
